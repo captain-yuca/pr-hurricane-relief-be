@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -77,28 +78,18 @@ public class User implements Serializable{
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof User)) return false;
         User user = (User) o;
-
-        if (!getId().equals(user.getId())) return false;
-        if (!getName().equals(user.getName())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (!getRegion().equals(user.getRegion())) return false;
-        else return true;
-
+        return Objects.equals(getId(), user.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getRegion().hashCode();
 
-        return result;
+        return Objects.hash(getId());
     }
 }
