@@ -40,9 +40,7 @@ public class Resource implements Serializable{
         return category;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public void setName(String name) {
         this.name = name;
