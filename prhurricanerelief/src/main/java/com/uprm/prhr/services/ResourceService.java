@@ -21,7 +21,7 @@ public class ResourceService{
     }
 
     public Resource createResource(String name, String categoryName){
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = this.categoryRepository.findByName(categoryName);
         if(category == null) {
             throw new RuntimeException("Category does not exist: " + categoryName);
         }

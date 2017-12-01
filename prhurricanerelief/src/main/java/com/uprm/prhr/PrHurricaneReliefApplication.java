@@ -2,11 +2,15 @@ package com.uprm.prhr;
 
 import com.uprm.prhr.models.Category;
 import com.uprm.prhr.services.CategoryService;
+import com.uprm.prhr.services.ResourceRequestService;
 import com.uprm.prhr.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Date;
+import java.util.Hashtable;
 
 @SpringBootApplication
 public class PrHurricaneReliefApplication implements CommandLineRunner{
@@ -14,6 +18,8 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	private CategoryService categoryService;
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	private ResourceRequestService resourceRequestService;
 
 
 	public static void main(String[] args) {
@@ -33,6 +39,22 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceService.createResource("Manantial","Gallon Water");
 		resourceService.createResource("Taino","Bottled Water");
 
+		this.createResourceRequests();
 
+
+	}
+
+	private void createResourceRequests(){
+		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+
+		resourceQtyHT1.put(new Long(1), new Long(3));
+		resourceQtyHT1.put(new Long(2), new Long(20));
+		resourceRequestService.createResourceRequest(resourceQtyHT1);
+
+		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
+
+		resourceQtyHT2.put(new Long(4), new Long(3));
+		resourceQtyHT2.put(new Long(5), new Long(20));
+		resourceRequestService.createResourceRequest(resourceQtyHT2);
 	}
 }
