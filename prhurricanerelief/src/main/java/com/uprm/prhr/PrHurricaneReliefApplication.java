@@ -24,6 +24,11 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		SpringApplication.run(PrHurricaneReliefApplication.class, args);
 	}
 
+	public void runUser(){
+		userService.createUser("Herbert","ihateddoingthis","Mayaguez");
+		userService.createUser("Kelvin","something","Mayaguez");
+		userService.createUser("Manuel","didthisthingfirst","San Juan");
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,9 +42,9 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceService.createResource("Manantial","Gallon Water");
 		resourceService.createResource("Taino","Bottled Water");
 
-		userService.createUser("Herbert","ihateddoingthis","Mayaguez");
-		userService.createUser("Kelvin","something","Mayaguez");
-		userService.createUser("Manuel","didthisthingfirst","San Juan");
+		this.runUser();
+
+
 
 
 	}
