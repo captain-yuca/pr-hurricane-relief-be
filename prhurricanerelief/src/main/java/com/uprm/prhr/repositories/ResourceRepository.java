@@ -11,4 +11,3 @@ public interface ResourceRepository extends CrudRepository<Resource, Long>{
     List<Resource> findByCategory_Name(@Param("name") String name);
 
 }
-

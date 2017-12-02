@@ -18,11 +18,11 @@ public class User implements Serializable{
     private String name;
 
     @Column
-    private String password; //pretty sure this is not super safe, but hey, what the hell
+    private String password; /**pretty sure this is not super safe, but hey, what the hell*/
 
-    //will probably have to implement data type specific to region to prevent form entering illegal value,
+    /**will probably have to implement data type specific to region to prevent form entering illegal value,
     //or at least a method that verifies the legality of a region name.
-    // or should we actually make it an entity? ehhh....
+    // or should we actually make it an entity? ehhh....*/
     @Column
     private String region;
 
