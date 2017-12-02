@@ -4,6 +4,7 @@ import com.uprm.prhr.models.Category;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.services.CategoryService;
 import com.uprm.prhr.services.ResourceService;
+import com.uprm.prhr.services.StockService;
 import com.uprm.prhr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +19,8 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	private ResourceService resourceService;
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private StockService stockService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrHurricaneReliefApplication.class, args);
@@ -41,6 +43,12 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		userService.createUser("Kelvin","something","Mayaguez");
 		userService.createUser("Manuel","didthisthingfirst","San Juan");
 
+		stockService.createStock((long)6700, (long)555678, 3.99, 5);
+		stockService.createStock((long) 6700, (long) 555679, 5.00, 2);
+		stockService.createStock((long) 5532, (long) 555680, 3.99, 2);
 
 	}
+
+
+
 }
