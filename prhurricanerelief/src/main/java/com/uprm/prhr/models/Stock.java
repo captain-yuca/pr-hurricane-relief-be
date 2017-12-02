@@ -21,12 +21,20 @@ public class Stock
     @Column
     private Double pricePerItem;
 
+    @ManyToOne
+    private User supplier;
+
+    @ManyToOne
+    private Resource resource;
+
     protected Stock(){};
 
-    public Stock(Long supplierId, Long resourceId, Integer qtySum, Double pricePerItem) {
-        this.stockId = new StockID(supplierId,resourceId);
+    public Stock(User supplier, Resource resource, Integer qtySum, Double pricePerItem) {
+        this.stockId = new StockID(supplier.getId(),resource.getId());
         this.qtySum = qtySum;
         this.pricePerItem = pricePerItem;
+        this.supplier = supplier;
+        this.resource = resource;
     }
 
     public StockID getStockId() {
@@ -42,6 +50,10 @@ public class Stock
     {
         return stockId.getResourceId();
     }
+
+    public User getSupplier(){return supplier;}
+
+    public Resource getResource(){return resource;}
 
     public void setStockId(StockID stockId) {
         this.stockId = stockId;
@@ -74,6 +86,15 @@ public class Stock
         this.pricePerItem = pricePerItem;
     }
 
+    public void setSupplier(User supplier)
+    {
+        this.supplier = supplier;
+    }
+
+    public void setResource(Resource resource)
+    {
+        this.resource=resource;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,6 +115,8 @@ public class Stock
                 "stockId=" + stockId +
                 ", qtySum=" + qtySum +
                 ", pricePerItem=" + pricePerItem +
+                ", supplier=" + supplier +
+                ", resource=" + resource +
                 '}';
     }
 }

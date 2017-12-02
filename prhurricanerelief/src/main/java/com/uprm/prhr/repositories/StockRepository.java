@@ -11,4 +11,6 @@ public interface StockRepository extends CrudRepository<Stock, StockID>
 {
     List<Stock> findByPricePerItem(@Param("price") Double price);
     List<Stock> findByQtySum(@Param("qty") Integer qty);
+    List<Stock> findByResourceName(@Param("resource") String resource);
+    List<Stock> findBySupplierName(@Param("name") String name);
 }

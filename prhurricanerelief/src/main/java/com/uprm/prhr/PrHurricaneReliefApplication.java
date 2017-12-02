@@ -1,10 +1,7 @@
 package com.uprm.prhr;
 
 import com.uprm.prhr.models.Category;
-import com.uprm.prhr.services.AvailabilityAnnouncementService;
-import com.uprm.prhr.services.CategoryService;
-import com.uprm.prhr.services.ResourceRequestService;
-import com.uprm.prhr.services.ResourceService;
+import com.uprm.prhr.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +20,10 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	private ResourceRequestService resourceRequestService;
 	@Autowired
 	private AvailabilityAnnouncementService availabilityAnnouncementService;
+	@Autowired
+	private ResourceTransactionService resourceTransactionService;
+	@Autowired
+	private StockService stockService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrHurricaneReliefApplication.class, args);
@@ -72,5 +73,12 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceQtyHT2.put(new Long(4), new Long(3));
 		resourceQtyHT2.put(new Long(5), new Long(20));
 		availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT2);
+	}
+
+	private void createStocks()
+	{
+		stockService.createStock((long)6700, "Dasani", 1.00, 6);
+		stockService.createStock((long)5532, "Taino", 0.99, 12);
+		stockService.createStock((long)6700, "Manantial", 1.50, 20);
 	}
 }

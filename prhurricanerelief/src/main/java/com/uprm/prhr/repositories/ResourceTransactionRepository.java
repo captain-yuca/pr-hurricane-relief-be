@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ResourceTransactionRepository extends CrudRepository<ResourceTransaction, Long>
 {
-    List<ResourceTransaction> findByPurchase_Price(@Param("purchasePrice") String purchasePrice);
+    List<ResourceTransaction> findByPurchase_Price(@Param("purchasePrice") Double purchasePrice);
     List<ResourceTransaction> findByDate(@Param("date") String date);
 }
