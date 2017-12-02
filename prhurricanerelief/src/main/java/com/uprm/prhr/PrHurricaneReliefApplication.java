@@ -1,14 +1,17 @@
 package com.uprm.prhr;
 
 import com.uprm.prhr.models.Category;
-import com.uprm.prhr.models.User;
-import com.uprm.prhr.services.*;
+import com.uprm.prhr.services.AvailabilityAnnouncementService;
+import com.uprm.prhr.services.CategoryService;
+import com.uprm.prhr.services.ResourceRequestService;
+import com.uprm.prhr.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Date;
+import java.util.Hashtable;
 
 @SpringBootApplication
 public class PrHurricaneReliefApplication implements CommandLineRunner{
@@ -17,11 +20,9 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	@Autowired
 	private ResourceService resourceService;
 	@Autowired
-	private UserService userService;
+	private ResourceRequestService resourceRequestService;
 	@Autowired
-	private StockService stockService;
-	@Autowired
-	private ResourceTransactionService resourceTransactionService;
+	private AvailabilityAnnouncementService availabilityAnnouncementService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrHurricaneReliefApplication.class, args);
@@ -40,20 +41,36 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceService.createResource("Manantial","Gallon Water");
 		resourceService.createResource("Taino","Bottled Water");
 
-		userService.createUser("Herbert","ihateddoingthis","Mayaguez");
-		userService.createUser("Kelvin","something","Mayaguez");
-		userService.createUser("Manuel","didthisthingfirst","San Juan");
+		this.createResourceRequests();
 
-		stockService.createStock((long)6700, (long)555678, 3.99, 5);
-		stockService.createStock((long) 6700, (long) 555679, 5.00, 2);
-		stockService.createStock((long) 5532, (long) 555680, 3.99, 2);
-
-		resourceTransactionService.createResourceTransaction((long) 6700, (long) 5532, new Date(2017, 12, 2), (long)555678, (long) 456, (long) 78787, 3.99);
-		resourceTransactionService.createResourceTransaction((long) 5532, (long) 6700, new Date(2017, 12, 1), (long)555678, (long) 457, (long) 78788, 5.99);
-		resourceTransactionService.createResourceTransaction((long) 6700, (long) 9398, new Date(2017, 12, 2), (long)555678, (long) 458, (long) 78789, 5.99);
 
 	}
 
+	private void createResourceRequests(){
+		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
 
+		resourceQtyHT1.put(new Long(1), new Long(3));
+		resourceQtyHT1.put(new Long(2), new Long(20));
+		resourceRequestService.createResourceRequest(resourceQtyHT1);
 
+		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
+
+		resourceQtyHT2.put(new Long(4), new Long(3));
+		resourceQtyHT2.put(new Long(5), new Long(20));
+		resourceRequestService.createResourceRequest(resourceQtyHT2);
+	}
+
+	private void createAvailabilityAnnouncements(){
+		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+
+		resourceQtyHT1.put(new Long(1), new Long(3));
+		resourceQtyHT1.put(new Long(2), new Long(20));
+		availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT1);
+
+		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
+
+		resourceQtyHT2.put(new Long(4), new Long(3));
+		resourceQtyHT2.put(new Long(5), new Long(20));
+		availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT2);
+	}
 }
