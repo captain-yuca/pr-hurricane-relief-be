@@ -46,6 +46,8 @@ public class ResourceTransaction implements Serializable
         this.purchasePrice = purchasePrice;
     }
 
+    protected ResourceTransaction(){};
+
     public Long gettID() {
         return tID;
     }
