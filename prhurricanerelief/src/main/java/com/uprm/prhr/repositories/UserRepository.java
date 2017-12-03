@@ -14,5 +14,12 @@ public interface UserRepository extends CrudRepository<User,Long> {
     List<User> findByRegion(@Param("region") String region);
     List<User> findByRegionAndName(@Param("region") String region, @Param("name")  String name);
 
+    List<User> findByFName(@Param("fName") String fName);
+    List<User> findByLName(@Param("lName") String lName);
+    List<User> findByFNameAndLName(@Param("fName") String fName, @Param("lName")  String lName);
+
+
+
+
 }
 

@@ -17,6 +17,8 @@ public class User implements Serializable{
     @Column
     private String name;
 
+
+
     @Column
     private String password; /**pretty sure this is not super safe, but hey, what the hell*/
 
@@ -26,12 +28,20 @@ public class User implements Serializable{
     @Column
     private String region;
 
+    @Column
+    private String fName;
+
+    @Column
+    private String lName;
 
 
-    public User(String name, String password, String region) {
+
+    public User(String name, String password, String region, String fName, String lName) {
         this.name = name;
         this.password = password;
         this.region = region;
+        this.fName = fName;
+        this.lName = lName;
     }
 
     protected User(){}
@@ -39,6 +49,7 @@ public class User implements Serializable{
     public Long getId() {
         return id;
     }
+
 
 
     public String getName() {
@@ -65,6 +76,37 @@ public class User implements Serializable{
         this.region = region;
     }
 
+    public String getfName() {
+        return fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getName(), user.getName());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getName());
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -72,21 +114,9 @@ public class User implements Serializable{
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", region='" + region + '\'' +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
                 '}';
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getId());
-    }
 }

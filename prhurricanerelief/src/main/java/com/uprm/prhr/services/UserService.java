@@ -14,8 +14,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(String name, String password, String region){
-        return userRepository.save(new User(name, password, region));
+    public User createUser(String name, String password, String region, String fName, String lName){
+        if(userRepository.findByName(name)!=null){
+            throw new RuntimeException("User name " + name+" already exists.");
+        }
+        return userRepository.save(new User(name, password, region, fName, lName));
     }
 
 
