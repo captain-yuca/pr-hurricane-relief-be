@@ -11,9 +11,9 @@ import java.util.Set;
 @Entity
 public class Stock
 {
-    @Id
-    @GeneratedValue
-    private Long stockId; //TODO: Get rid of this id, figure the compound id out
+
+    @EmbeddedId
+    private StockPk pk;
 
     @Column
     private Integer qtySum;
@@ -22,38 +22,22 @@ public class Stock
     @Column
     private Double pricePerItem;
 
-    @ManyToOne
-    private User supplier;
-
-    @ManyToOne
-    private Resource resource;
 
     protected Stock(){};
 
-    public Stock(User supplier, Resource resource, Integer qtySum, Double pricePerItem) {
+    public Stock(Supplier supplier, Resource resource, Integer qtySum, Double pricePerItem) {
         this.qtySum = qtySum;
         this.pricePerItem = pricePerItem;
-        this.supplier = supplier;
-        this.resource = resource;
+        this.pk = new StockPk(supplier, resource);
     }
 
-    public Long getStockId() {
-        return stockId;
+    public StockPk getStockId() {
+        return pk;
     }
 
-    public Long getSupplierID()
-    {
-        return supplier.getId();
-    }
+    public User getSupplier(){return pk.getSupplier();}
 
-    public Long getResourceID()
-    {
-        return resource.getId();
-    }
-
-    public User getSupplier(){return supplier;}
-
-    public Resource getResource(){return resource;}
+    public Resource getResource(){return pk.getResource();}
 
 
     public Integer getQtySum() {
@@ -73,37 +57,26 @@ public class Stock
         this.pricePerItem = pricePerItem;
     }
 
-    public void setSupplier(User supplier)
-    {
-        this.supplier = supplier;
-    }
-
-    public void setResource(Resource resource)
-    {
-        this.resource=resource;
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Stock stock = (Stock) o;
-        return Objects.equals(stockId, stock.stockId);
+        if (!(o instanceof StockPk)) return false;
+        StockPk that = (StockPk) o;
+        return Objects.equals(pk.getSupplier(), that.getSupplier()) &&
+                Objects.equals(pk.getResource(), that.getResource());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(stockId);
-    }
+            return Objects.hash(pk.getSupplier(), pk.getResource());
+        }
 
     @Override
     public String toString() {
         return "Stock{" +
-                "stockId=" + stockId +
+                "stockPk=" + pk +
                 ", qtySum=" + qtySum +
                 ", pricePerItem=" + pricePerItem +
-                ", supplier=" + supplier +
-                ", resource=" + resource +
                 '}';
     }
 }

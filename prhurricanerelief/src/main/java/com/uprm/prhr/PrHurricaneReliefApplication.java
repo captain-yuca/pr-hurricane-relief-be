@@ -84,13 +84,15 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 
 		User usr1 = userService.createUser("Kelvin", "helloworld", "Mayaguez", "Herbert", "Perez");
 		User usr2 = userService.createUser("Manuel", "12345", "San Juan", "Herbert", "Perez");
+		Supplier sup1 = supplierService.createSupplier("Kelvin");
+		Supplier sup2 = supplierService.createSupplier("Manuel");
 
 		ArrayList<User> users = new ArrayList<>();
 		users.add(usr1);
 		users.add(usr2);
 		this.createResourceRequestsAndRequesters(users);
 		this.createAvailabilityAnnouncementsAndSuppliers(users);
-		this.createStocks(usr1, usr2);
+		this.createStocks(usr1, usr2, sup1, sup2);
 
 		this.runUser();
 
@@ -118,7 +120,7 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	private void createAvailabilityAnnouncementsAndSuppliers(Collection<User> users){
 
 		for(User user: users){
-			Supplier s = supplierService.createSupplier(user.getName());
+//			Supplier s = supplierService.createSupplier(user.getName());
 
 			Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
 			resourceQtyHT1.put(new Long(1), new Long(3));
@@ -129,14 +131,14 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 
 	}
 
-	private void createStocks(User usr1, User usr2)
+	private void createStocks(User usr1, User usr2, Supplier sup1, Supplier sup2)
 	{
 		stockService.createStock(usr1.getId(), "Dasani 8oz", 1.00, 6);
 		stockService.createStock(usr2.getId(), "Taino", 0.99, 12);
 		stockService.createStock(usr1.getId(), "Manantial", 1.50, 20);
 
-		resourceTransactionService.createResourceTransaction(usr1.getId(), usr2.getId(), new Date(2017, 12, 1), "Taino", 4);
-        resourceTransactionService.createResourceTransaction(usr1.getId(), usr2.getId(), new Date(2017, 12, 2), "Nikini 8oz", 2);
-        resourceTransactionService.createResourceTransaction(usr2.getId(), usr1.getId(), new Date(2017, 12, 2), "Manantial", 4);
+		resourceTransactionService.createResourceTransaction(usr1.getId(), sup2.getId(), new Date(2017, 12, 1), "Taino", 4);
+        resourceTransactionService.createResourceTransaction(usr1.getId(), sup2.getId(), new Date(2017, 12, 2), "Nikini 8oz", 2);
+        resourceTransactionService.createResourceTransaction(usr2.getId(), sup1.getId(), new Date(2017, 12, 2), "Manantial", 4);
 	}
 }
