@@ -1,12 +1,12 @@
 package com.uprm.prhr.models;
 
+import com.uprm.prhr.helpers.Region;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class User implements Serializable{
@@ -26,7 +26,7 @@ public class User implements Serializable{
     //or at least a method that verifies the legality of a region name.
     // or should we actually make it an entity? ehhh....*/
     @Column
-    private String region;
+    private Region region;
 
     @Column
     private String fName;
@@ -36,7 +36,7 @@ public class User implements Serializable{
 
 
 
-    public User(String name, String password, String region, String fName, String lName) {
+    public User(String name, String password, Region region, String fName, String lName) {
         this.name = name;
         this.password = password;
         this.region = region;
@@ -68,11 +68,11 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 
@@ -113,7 +113,7 @@ public class User implements Serializable{
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", region='" + region + '\'' +
+                ", region='" + region.toString() + '\'' +
                 ", fName='" + fName + '\'' +
                 ", lName='" + lName + '\'' +
                 '}';

@@ -39,7 +39,7 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		userService.createUser("theherbertperez", "thistookforever","Mayaguez","Herbert", "Perez");
 		userService.createUser("K3RMoon","something","Mayaguez","Kelvin","Roche");
 		userService.createUser("Captain Yuca","didthisthingfirst","San Juan", "Manuel", "Baez");
-		userService.createUser("Medalla","Light","Yello Town","Random","Person");
+		userService.createUser("Medalla","Light","Ponce","Random","Person");
 
 		adminService.createAdmin("Medalla");
 		adminService.createAdmin("Captain Yuca");
