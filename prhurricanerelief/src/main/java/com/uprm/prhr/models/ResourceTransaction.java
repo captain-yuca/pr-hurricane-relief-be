@@ -18,7 +18,7 @@ public class ResourceTransaction implements Serializable {
     private User user;
 
     @ManyToOne
-    private User supplier;
+    private Supplier supplier;
 
     @Column
     private Date date;
@@ -31,7 +31,7 @@ public class ResourceTransaction implements Serializable {
 
     protected ResourceTransaction() {}
 
-    public ResourceTransaction(User user, User supplier, Date date, Resource resource, Integer qty) {
+    public ResourceTransaction(User user, Supplier supplier, Date date, Resource resource, Integer qty) {
         this.user = user;
         this.supplier = supplier;
         this.date = date;
@@ -51,11 +51,11 @@ public class ResourceTransaction implements Serializable {
         this.user = user;
     }
 
-    public User getSupplier() {
+    public Supplier getSupplier() {
         return supplier;
     }
 
-    public void setSupplier(User supplier) {
+    public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
 
