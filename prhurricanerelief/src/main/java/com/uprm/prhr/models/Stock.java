@@ -12,7 +12,8 @@ import java.util.Set;
 public class Stock
 {
     @Id
-    private StockID stockId;
+    @GeneratedValue
+    private Long stockId; //TODO: Get rid of this id, figure the compound id out
 
     @Column
     private Integer qtySum;
@@ -30,44 +31,30 @@ public class Stock
     protected Stock(){};
 
     public Stock(User supplier, Resource resource, Integer qtySum, Double pricePerItem) {
-        this.stockId = new StockID(supplier.getId(),resource.getId());
         this.qtySum = qtySum;
         this.pricePerItem = pricePerItem;
         this.supplier = supplier;
         this.resource = resource;
     }
 
-    public StockID getStockId() {
+    public Long getStockId() {
         return stockId;
     }
 
     public Long getSupplierID()
     {
-        return stockId.getSupplierId();
+        return supplier.getId();
     }
 
     public Long getResourceID()
     {
-        return stockId.getResourceId();
+        return resource.getId();
     }
 
     public User getSupplier(){return supplier;}
 
     public Resource getResource(){return resource;}
 
-    public void setStockId(StockID stockId) {
-        this.stockId = stockId;
-    }
-
-    public void setSupplierID(Long supplierID)
-    {
-        this.stockId.setSupplierId(supplierID);
-    }
-
-    public void setResourceID(Long resourceID)
-    {
-        this.stockId.setResourceId(resourceID);
-    }
 
     public Integer getQtySum() {
         return qtySum;

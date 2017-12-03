@@ -9,103 +9,78 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class ResourceTransaction implements Serializable
-{
-   @Id
-   @GeneratedValue
-   private Long tID;
+public class ResourceTransaction implements Serializable {
+    @Id
+    @GeneratedValue
+    private Long tID;
 
-   @Column
-    private Long uID;
+    @ManyToOne
+    private User user;
 
-   @Column
-    private Long sID;
+    @ManyToOne
+    private User supplier;
 
-   @Column
+    @Column
     private Date date;
 
-   @Column
-    private Long rID;
+    @ManyToOne
+    private Resource resource;
 
-   @Column
-    private Long annID;
+    @Column
+    private Integer qty;
 
-   @Column
-    private Long reqID;
+    protected ResourceTransaction() {}
 
-   @Column
-    private Double purchasePrice;
-
-    public ResourceTransaction(Long uID, Long sID, Date date, Long rID, Long annID, Long reqID, Double purchasePrice) {
-        this.uID = uID;
-        this.sID = sID;
+    public ResourceTransaction(User user, User supplier, Date date, Resource resource, Integer qty) {
+        this.user = user;
+        this.supplier = supplier;
         this.date = date;
-        this.rID = rID;
-        this.annID = annID;
-        this.reqID = reqID;
-        this.purchasePrice = purchasePrice;
+        this.resource = resource;
+        this.qty = qty;
     }
-
-    protected ResourceTransaction(){};
 
     public Long gettID() {
         return tID;
     }
 
-    public Long getuID() {
-        return uID;
+    public User getUser() {
+        return user;
     }
 
-    public Long getsID() {
-        return sID;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(User supplier) {
+        this.supplier = supplier;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public Long getrID() {
-        return rID;
-    }
-
-    public Long getAnnID() {
-        return annID;
-    }
-
-    public Long getReqID() {
-        return reqID;
-    }
-
-    public Double getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setuID(Long uID) {
-        this.uID = uID;
-    }
-
-    public void setsID(Long sID) {
-        this.sID = sID;
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setrID(Long rID) {
-        this.rID = rID;
+    public Resource getResource() {
+        return resource;
     }
 
-    public void setAnnID(Long annID) {
-        this.annID = annID;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
-    public void setReqID(Long reqID) {
-        this.reqID = reqID;
+    public Integer getQty() {
+        return qty;
     }
 
-    public void setPurchasePrice(Double purchasePrice) {
-        this.purchasePrice = purchasePrice;
+    public void setPurchasePrice(Integer qty) {
+        this.qty = qty;
     }
 
     @Override
@@ -126,13 +101,11 @@ public class ResourceTransaction implements Serializable
     public String toString() {
         return "ResourceTransaction{" +
                 "tID=" + tID +
-                ", uID=" + uID +
-                ", sID=" + sID +
+                ", user=" + user +
+                ", supplier=" + supplier +
                 ", date=" + date +
-                ", rID=" + rID +
-                ", annID=" + annID +
-                ", reqID=" + reqID +
-                ", purchasePrice=" + purchasePrice +
+                ", resource=" + resource +
+                ", qty=" + qty +
                 '}';
     }
 }

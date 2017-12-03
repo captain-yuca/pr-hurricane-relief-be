@@ -1,8 +1,9 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceTransaction;
-import com.uprm.prhr.repositories.ResourceTransactionRepository;
-import com.uprm.prhr.repositories.StockRepository;
+import com.uprm.prhr.models.User;
+import com.uprm.prhr.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,18 +13,36 @@ import java.util.Date;
 public class ResourceTransactionService
 {
     private ResourceTransactionRepository resourceTransactionRepository;
-    private StockRepository stockRepository;
+    private UserRepository userRepository;
+    private ResourceRepository resourceRepository;
 
     @Autowired
-    public ResourceTransactionService(StockRepository stockRepository, ResourceTransactionRepository resourceTransactionRepository)
+    public ResourceTransactionService(ResourceTransactionRepository resourceTransactionRepository, UserRepository userRepository, ResourceRepository resourceRepository)
     {
-        this.stockRepository = stockRepository;
         this.resourceTransactionRepository = resourceTransactionRepository;
+        this.resourceRepository = resourceRepository;
+        this.userRepository = userRepository;
     }
 
-    public ResourceTransaction createResourceTransaction(Long uID, Long sID, Date date, Long rID, Long annID, Long reqID, Double purchasePrice )
+    public ResourceTransaction createResourceTransaction(Long uID, Long sID, Date date, String resourceName, Integer qty)
     {
-        return resourceTransactionRepository.save(new ResourceTransaction(uID, sID, date, rID, annID, reqID, purchasePrice));
+        Resource resource = this.resourceRepository.findByName(resourceName);
+        User user = this.userRepository.findOne(uID);
+        User supplier = this.userRepository.findOne(sID);
+
+        if(resource == null)
+        {
+            throw new RuntimeException("Resource Does Not Exist: " + resourceName);
+        }
+        if(user == null)
+        {
+            throw new RuntimeException("User ID does not exist: " + uID);
+        }
+        if(supplier ==null)
+        {
+            throw new RuntimeException("Supplier ID does not exist: " + sID);
+        }
+        return resourceTransactionRepository.save(new ResourceTransaction(user, supplier, date, resource, qty));
     }
 
     public Iterable<ResourceTransaction> lookup() { return resourceTransactionRepository.findAll();}

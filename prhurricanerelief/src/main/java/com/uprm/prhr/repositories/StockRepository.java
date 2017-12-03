@@ -7,10 +7,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface StockRepository extends CrudRepository<Stock, StockID>
+public interface StockRepository extends CrudRepository<Stock, Long>
 {
     List<Stock> findByPricePerItem(@Param("price") Double price);
     List<Stock> findByQtySum(@Param("qty") Integer qty);
     List<Stock> findByResourceName(@Param("resource") String resource);
     List<Stock> findBySupplierName(@Param("name") String name);
+
+    //TODO: Add more search queries if possible and necessary
 }

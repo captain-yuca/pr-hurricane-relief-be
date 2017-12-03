@@ -1,10 +1,13 @@
 package com.uprm.prhr.models;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class StockID implements Serializable {
+    @Column
     private Long supplierId;
+    @Column
     private Long resourceId;
 
     public StockID(Long supplierId, Long resourceId)
@@ -12,6 +15,8 @@ public class StockID implements Serializable {
         this.resourceId = resourceId;
         this.supplierId = supplierId;
     }
+
+    protected StockID(){};
 
     public Long getSupplierId() {
         return supplierId;
