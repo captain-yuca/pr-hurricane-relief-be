@@ -17,15 +17,15 @@ public class ResourceRequest implements Serializable{
     private java.util.Date date;
 
     @OneToMany
-    private Set<ResourceRequestDetail> resourceRequestDetails;
+    private Set<ResourceRequestItem> resourceRequestItems;
 
     @ManyToOne
     private Requester requester;
 
 
-    public ResourceRequest(java.util.Date date, Set<ResourceRequestDetail> resourceRequestDetails, Requester requester) {
+    public ResourceRequest(java.util.Date date, Set<ResourceRequestItem> resourceRequestItems, Requester requester) {
         this.date = date;
-        this.resourceRequestDetails = resourceRequestDetails;
+        this.resourceRequestItems = resourceRequestItems;
         this.requester = requester;
     }
     protected ResourceRequest() {}
@@ -45,12 +45,12 @@ public class ResourceRequest implements Serializable{
         this.date = date;
     }
 
-    public Set<ResourceRequestDetail> getResourceRequestDetails() {
-        return resourceRequestDetails;
+    public Set<ResourceRequestItem> getResourceRequestItems() {
+        return resourceRequestItems;
     }
 
-    public void setResourceRequestDetails(HashSet<ResourceRequestDetail> resourceRequestDetails) {
-        this.resourceRequestDetails = resourceRequestDetails;
+    public void setResourceRequestItems(HashSet<ResourceRequestItem> resourceRequestItems) {
+        this.resourceRequestItems = resourceRequestItems;
     }
 
     public Requester getRequester() {
@@ -81,7 +81,7 @@ public class ResourceRequest implements Serializable{
         return "ResourceRequest{" +
                 "id=" + id +
                 ", date=" + date +
-                ", resourceRequestDetails=" + resourceRequestDetails +
+                ", resourceRequestItems=" + resourceRequestItems +
                 ", requester=" + requester +
                 '}';
     }

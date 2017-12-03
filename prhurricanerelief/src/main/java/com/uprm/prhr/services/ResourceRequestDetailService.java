@@ -1,8 +1,7 @@
 package com.uprm.prhr.services;
 
 import com.uprm.prhr.models.Resource;
-import com.uprm.prhr.models.ResourceRequest;
-import com.uprm.prhr.models.ResourceRequestDetail;
+import com.uprm.prhr.models.ResourceRequestItem;
 import com.uprm.prhr.repositories.ResourceRepository;
 import com.uprm.prhr.repositories.ResourceRequestDetailRepository;
 import com.uprm.prhr.repositories.ResourceRequestRepository;
@@ -22,7 +21,7 @@ public class ResourceRequestDetailService {
         this.resourceRepository = resourceRepository;
     }
 
-    public ResourceRequestDetail createResourceRequestDetail(Long resourceId, Long qty){
+    public ResourceRequestItem createResourceRequestDetail(Long resourceId, Long qty){
         Resource resource = this.resourceRepository.findOne(resourceId);
         if(resource == null)
             throw new RuntimeException("Resource id not found: " + resourceId);
@@ -31,6 +30,6 @@ public class ResourceRequestDetailService {
 //        if(resourceRequest == null)
 //            throw new RuntimeException("ResourceRequest id not found: " + resourceRequestId);
 
-        return resourceRequestDetailRepository.save(new ResourceRequestDetail(resource, qty));
+        return resourceRequestDetailRepository.save(new ResourceRequestItem(resource, qty));
     }
 }

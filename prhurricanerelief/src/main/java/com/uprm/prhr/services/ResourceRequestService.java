@@ -3,7 +3,7 @@ package com.uprm.prhr.services;
 import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceRequest;
-import com.uprm.prhr.models.ResourceRequestDetail;
+import com.uprm.prhr.models.ResourceRequestItem;
 import com.uprm.prhr.repositories.RequesterRepository;
 import com.uprm.prhr.repositories.ResourceRepository;
 import com.uprm.prhr.repositories.ResourceRequestRepository;
@@ -38,7 +38,7 @@ public class ResourceRequestService {
         Requester requester = this.requesterRepository.findByUser_Name(requesterUsername);
         if(requester == null)
             throw new RuntimeException("Requester not found: " + requesterUsername);
-        //No resources found, can't have a ResourceRequest without a ResourceRequestDetail
+        //No resources found, can't have a ResourceRequest without a ResourceRequestItem
         if(resources.isEmpty())
             throw new RuntimeException("No resources are given as a parameter.");
 
@@ -47,17 +47,17 @@ public class ResourceRequestService {
 //            throw new RuntimeException("What");
 
         //HashSet to add to
-        Set<ResourceRequestDetail> resourceRequestDetails = new HashSet<ResourceRequestDetail>();
+        Set<ResourceRequestItem> resourceRequestItems = new HashSet<ResourceRequestItem>();
 
         for(Long rid:resources.keySet()){
             Resource resource = this.resourceRepository.findOne(rid);
             if(resource == null)
                 throw new RuntimeException("Resource does not exist with given Id: " + rid);
-            ResourceRequestDetail rrd = this.resourceRequestDetailService.
+            ResourceRequestItem rrd = this.resourceRequestDetailService.
                     createResourceRequestDetail(rid, resources.get(rid));
-            resourceRequestDetails.add(rrd);
+            resourceRequestItems.add(rrd);
         }
 
-        return resourceRequestRepository.save(new ResourceRequest(new Date(), resourceRequestDetails, requester));
+        return resourceRequestRepository.save(new ResourceRequest(new Date(), resourceRequestItems, requester));
     }
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class ResourceRequestDetail implements Serializable{
+public class ResourceRequestItem implements Serializable{
 
     @Id
     @GeneratedValue
@@ -17,12 +17,12 @@ public class ResourceRequestDetail implements Serializable{
     @Column
     private Long quantity;
 
-    public ResourceRequestDetail(Resource resource, Long quantity) {
+    public ResourceRequestItem(Resource resource, Long quantity) {
         this.resource = resource;
         this.quantity = quantity;
     }
 
-    protected  ResourceRequestDetail(){}
+    protected ResourceRequestItem(){}
 
     public Long getId() {
         return id;
@@ -53,7 +53,7 @@ public class ResourceRequestDetail implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ResourceRequestDetail that = (ResourceRequestDetail) o;
+        ResourceRequestItem that = (ResourceRequestItem) o;
 
         return getId().equals(that.getId());
     }
@@ -65,7 +65,7 @@ public class ResourceRequestDetail implements Serializable{
 
     @Override
     public String toString() {
-        return "ResourceRequestDetail{" +
+        return "ResourceRequestItem{" +
                 "id=" + id +
                 ", resource=" + resource +
                 ", quantity=" + quantity +

@@ -39,7 +39,7 @@ public class AvailabilityAnnouncementService {
         if(supplier == null)
             throw new RuntimeException("User does not exist: " + supplierUsername);
 
-        //No resources found, can't have a ResourceRequest without a ResourceRequestDetail
+        //No resources found, can't have a ResourceRequest without a ResourceRequestItem
         if(resources.isEmpty())
             throw new RuntimeException("No resources are given as a parameter.");
 
