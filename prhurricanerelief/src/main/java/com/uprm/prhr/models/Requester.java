@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Admin implements Serializable{
+public class Requester implements Serializable{
 
     @Id
     @GeneratedValue
@@ -19,11 +19,11 @@ public class Admin implements Serializable{
 
 
 
-    public Admin(User user) {
-       this.user = user;
+    public Requester(User user) {
+        this.user = user;
     }
 
-    protected Admin(){
+    protected Requester(){
 
     }
 
@@ -46,10 +46,10 @@ public class Admin implements Serializable{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Admin)) return false;
-        Admin admin = (Admin) o;
-        return Objects.equals(getId(), admin.getId()) &&
-                Objects.equals(getUser(), admin.getUser());
+        if (!(o instanceof Requester)) return false;
+        Requester requester = (Requester) o;
+        return Objects.equals(getId(), requester.getId()) &&
+                Objects.equals(getUser(), requester.getUser());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Admin implements Serializable{
 
     @Override
     public String toString() {
-        return "Admin{" +
+        return "Requester{" +
                 "id=" + id +
                 ", user=" + user.getName() +
                 '}';
