@@ -16,4 +16,9 @@ public interface RequesterRepository extends CrudRepository<Requester, Long>{
     List<Requester> findByUser_LName(@Param("lName") String lName);
     List<Requester> findByUser_FNameAndUser_LName(@Param("fName") String fName, @Param("lName")  String lName);
 
+    List<Requester> findByUser_RegionAndUser_FName(@Param("region") Region region, @Param("fName")  String fName);
+    List<Requester> findByUser_RegionAndUser_LName(@Param("region") Region region, @Param("lName")  String lName);
+    List<Requester> findByUser_RegionAndUser_FNameAndUser_LName(@Param("region") Region region, @Param("fName")  String fName, @Param("lName") String lName);
+
+
 }

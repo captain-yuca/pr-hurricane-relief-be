@@ -16,4 +16,9 @@ public interface SupplierRepository extends CrudRepository<Supplier, Long>{
     List<Supplier> findByUser_LName(@Param("lName") String lName);
     List<Supplier> findByUser_FNameAndUser_LName(@Param("fName") String fName, @Param("lName")  String lName);
 
+    List<Supplier> findByUser_RegionAndUser_FName(@Param("region") Region region, @Param("fName")  String fName);
+    List<Supplier> findByUser_RegionAndUser_LName(@Param("region") Region region, @Param("lName")  String lName);
+    List<Supplier> findByUser_RegionAndUser_FNameAndUser_LName(@Param("region") Region region, @Param("fName")  String fName, @Param("lName") String lName);
+
+
 }

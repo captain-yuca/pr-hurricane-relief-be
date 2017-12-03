@@ -16,5 +16,9 @@ public interface AdminRepository extends CrudRepository<Admin, Long>{
     List<Admin> findByUser_LName(@Param("lName") String lName);
     List<Admin> findByUser_FNameAndUser_LName(@Param("fName") String fName, @Param("lName")  String lName);
 
+    List<Admin> findByUser_RegionAndUser_FName(@Param("region") Region region, @Param("fName")  String fName);
+    List<Admin> findByUser_RegionAndUser_LName(@Param("region") Region region, @Param("lName")  String lName);
+    List<Admin> findByUser_RegionAndUser_FNameAndUser_LName(@Param("region") Region region, @Param("fName")  String fName, @Param("lName") String lName);
+
 
 }
