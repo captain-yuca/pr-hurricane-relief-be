@@ -20,8 +20,8 @@ public class StockPk implements Serializable {
         this.resource = resource;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public User getSupplier() {
+        return supplier.getUser();
     }
 
     public void setSupplier(Supplier supplier) {
@@ -54,7 +54,7 @@ public class StockPk implements Serializable {
     @Override
     public String toString() {
         return "StockPk{" +
-                "supplier=" + supplier +
+                "supplier=" + supplier.getUser() +
                 ", resource=" + resource +
                 '}';
     }

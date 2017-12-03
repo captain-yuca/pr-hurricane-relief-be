@@ -35,7 +35,7 @@ public class Stock
         return pk;
     }
 
-    public Supplier getSupplier(){return pk.getSupplier();}
+    public User getSupplier(){return pk.getSupplier();}
 
     public Resource getResource(){return pk.getResource();}
 
