@@ -9,6 +9,6 @@ import java.util.Set;
 public interface ResourceRequestProjection {
     public Long getId();
     public Date getDate();
-    public Set<ResourceRequestItem> getResourceRequestDetails();
+    public Set<ResourceRequestItemProjection> getResourceRequestItems();
     public Requester getRequester();
 }

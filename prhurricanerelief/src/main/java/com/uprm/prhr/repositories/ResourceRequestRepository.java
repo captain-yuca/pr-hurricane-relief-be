@@ -17,8 +17,8 @@ public interface ResourceRequestRepository extends CrudRepository<ResourceReques
     List<ResourceRequest> findByRequester_User_Name(@Param("username") String username);
 
     @RestResource(rel = "findByCategory", path = "findByCategory")
-    List<ResourceRequest> findByResourceRequestDetails_Resource_Category_Name(@Param("category") String category);
+    List<ResourceRequest> findByResourceRequestItems_Resource_Category_Name(@Param("category") String category);
 
     @RestResource(rel = "findByResourceId",path = "findByResourceId")
-    List<ResourceRequest> findByResourceRequestDetails_Resource_Id(@Param("id") Long id);
+    List<ResourceRequest> findByResourceRequestItems_Resource_Id(@Param("id") Long id);
 }

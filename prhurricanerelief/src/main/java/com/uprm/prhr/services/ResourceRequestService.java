@@ -20,13 +20,13 @@ public class ResourceRequestService {
     private ResourceRequestRepository resourceRequestRepository;
     private ResourceRepository resourceRepository;
     private RequesterRepository requesterRepository;
-    private ResourceRequestDetailService resourceRequestDetailService;
+    private ResourceRequestItemService resourceRequestItemService;
 
     @Autowired
-    public ResourceRequestService(ResourceRequestRepository resourceRequestRepository, ResourceRepository resourceRepository, ResourceRequestDetailService resourceRequestDetailService, RequesterRepository requesterRepository) {
+    public ResourceRequestService(ResourceRequestRepository resourceRequestRepository, ResourceRepository resourceRepository, ResourceRequestItemService resourceRequestItemService, RequesterRepository requesterRepository) {
         this.resourceRequestRepository = resourceRequestRepository;
         this.resourceRepository = resourceRepository;
-        this.resourceRequestDetailService = resourceRequestDetailService;
+        this.resourceRequestItemService = resourceRequestItemService;
         this.requesterRepository = requesterRepository;
     }
 
@@ -53,8 +53,8 @@ public class ResourceRequestService {
             Resource resource = this.resourceRepository.findOne(rid);
             if(resource == null)
                 throw new RuntimeException("Resource does not exist with given Id: " + rid);
-            ResourceRequestItem rrd = this.resourceRequestDetailService.
-                    createResourceRequestDetail(rid, resources.get(rid));
+            ResourceRequestItem rrd = this.resourceRequestItemService.
+                    createResourceRequestItem(rid, resources.get(rid));
             resourceRequestItems.add(rrd);
         }
 
