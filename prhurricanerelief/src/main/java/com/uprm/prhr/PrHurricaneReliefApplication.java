@@ -1,9 +1,8 @@
 package com.uprm.prhr;
 
-import com.uprm.prhr.models.Category;
+import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.services.*;
-import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.Supplier;
 import com.uprm.prhr.services.AdminService;
 import com.uprm.prhr.services.CategoryService;
@@ -17,7 +16,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -90,7 +88,7 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		ArrayList<User> users = new ArrayList<>();
 		users.add(usr1);
 		users.add(usr2);
-		this.createResourceRequests();
+		this.createResourceRequestsAndRequesters(users);
 		this.createAvailabilityAnnouncementsAndSuppliers(users);
 		this.createStocks(usr1, usr2);
 
@@ -100,21 +98,21 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 
 	}
 
-	private void createResourceRequests(){
+	private void createResourceRequestsAndRequesters(Collection<User> users){
+		for(User user: users){
+			Requester r = requesterService.createRequester(user.getName());
+
+
+			Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+
+			resourceQtyHT1.put(new Long(1), new Long(3));
+			resourceQtyHT1.put(new Long(2), new Long(20));
+			resourceRequestService.createResourceRequest(resourceQtyHT1, user.getName());
+
+		}
 
 
 
-		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
-
-		resourceQtyHT1.put(new Long(1), new Long(3));
-		resourceQtyHT1.put(new Long(2), new Long(20));
-		resourceRequestService.createResourceRequest(resourceQtyHT1);
-
-		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
-
-		resourceQtyHT2.put(new Long(4), new Long(3));
-		resourceQtyHT2.put(new Long(5), new Long(20));
-		resourceRequestService.createResourceRequest(resourceQtyHT2);
 	}
 
 	private void createAvailabilityAnnouncementsAndSuppliers(Collection<User> users){

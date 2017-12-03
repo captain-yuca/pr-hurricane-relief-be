@@ -19,14 +19,14 @@ public class ResourceRequest implements Serializable{
     @OneToMany
     private Set<ResourceRequestDetail> resourceRequestDetails;
 
-//    Represents the requester
-//    @Column
-//    private Requester requester;
+    @ManyToOne
+    private Requester requester;
 
 
-    public ResourceRequest(java.util.Date date, Set<ResourceRequestDetail> resourceRequestDetails) {
+    public ResourceRequest(java.util.Date date, Set<ResourceRequestDetail> resourceRequestDetails, Requester requester) {
         this.date = date;
         this.resourceRequestDetails = resourceRequestDetails;
+        this.requester = requester;
     }
     protected ResourceRequest() {}
     public Long getId() {
@@ -53,6 +53,14 @@ public class ResourceRequest implements Serializable{
         this.resourceRequestDetails = resourceRequestDetails;
     }
 
+    public Requester getRequester() {
+        return requester;
+    }
+
+    public void setRequester(Requester requester) {
+        this.requester = requester;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,6 +82,7 @@ public class ResourceRequest implements Serializable{
                 "id=" + id +
                 ", date=" + date +
                 ", resourceRequestDetails=" + resourceRequestDetails +
+                ", requester=" + requester +
                 '}';
     }
 }
