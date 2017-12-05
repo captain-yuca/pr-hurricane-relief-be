@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.CategoryNotFoundException;
 import com.uprm.prhr.models.Category;
 import com.uprm.prhr.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CategoryService {
             if(parentCategoryName != null){
                 parentCategory = categoryRepository.findByName(parentCategoryName);
                 if(parentCategory == null)
-                    throw new RuntimeException("Category does not exist: " + parentCategoryName);
+                    throw new CategoryNotFoundException(parentCategoryName);
             }
             return categoryRepository.save(new Category(name, parentCategory));
     }

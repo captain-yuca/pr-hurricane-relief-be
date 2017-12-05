@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.UserNotFoundException;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.models.Supplier;
 import com.uprm.prhr.repositories.UserRepository;
@@ -23,7 +24,7 @@ public class SupplierService{
     public Supplier createSupplier(String userName){
         User user = userRepository.findByName(userName);
         if(user == null) {
-            throw new RuntimeException("User does not exist: " + userName);
+            throw new UserNotFoundException(userName);
         }
         return supplierRepository.save(new Supplier(user));
     }

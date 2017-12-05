@@ -1,5 +1,7 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.MissingParameterException;
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceRequest;
 import com.uprm.prhr.models.ResourceRequestDetail;
@@ -33,7 +35,7 @@ public class ResourceRequestService {
 
         //No resources found, can't have a ResourceRequest without a ResourceRequestDetail
         if(resources.isEmpty())
-            throw new RuntimeException("No resources are given as a parameter.");
+            throw new MissingParameterException();
 
 //        ResourceRequest resourceRequest = resourceRequestRepository.save(new ResourceRequest(new Date(), new HashSet()));
 //        if(resourceRequest == null)
@@ -45,7 +47,7 @@ public class ResourceRequestService {
         for(Long rid:resources.keySet()){
             Resource resource = this.resourceRepository.findOne(rid);
             if(resource == null)
-                throw new RuntimeException("Resource does not exist with given Id: " + rid);
+                throw new ResourceNotFoundException("" + rid);
             ResourceRequestDetail rrd = this.resourceRequestDetailService.
                     createResourceRequestDetail(rid, resources.get(rid));
             resourceRequestDetails.add(rrd);

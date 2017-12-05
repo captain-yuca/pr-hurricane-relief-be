@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceRequest;
 import com.uprm.prhr.models.ResourceRequestDetail;
@@ -25,7 +26,7 @@ public class ResourceRequestDetailService {
     public ResourceRequestDetail createResourceRequestDetail(Long resourceId, Long qty){
         Resource resource = this.resourceRepository.findOne(resourceId);
         if(resource == null)
-            throw new RuntimeException("Resource id not found: " + resourceId);
+            throw new ResourceNotFoundException("" + resourceId);
 
 //        ResourceRequest resourceRequest = this.resourceRequestRepository.findOne(resourceRequestId);
 //        if(resourceRequest == null)
