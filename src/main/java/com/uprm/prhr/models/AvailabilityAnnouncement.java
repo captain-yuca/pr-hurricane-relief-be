@@ -15,12 +15,16 @@ public class AvailabilityAnnouncement implements Serializable{
     @Column
     private Date date;
 
+    @ManyToOne
+    private Supplier supplier;
+
     @OneToMany
     private Set<AvailabilityAnnouncementItem> availabilityAnnouncementItems;
 
-    public AvailabilityAnnouncement(Date date, Set<AvailabilityAnnouncementItem> availabilityAnnouncementItems) {
+    public AvailabilityAnnouncement(Date date, Set<AvailabilityAnnouncementItem> availabilityAnnouncementItems, Supplier supplier) {
         this.date = date;
         this.availabilityAnnouncementItems = availabilityAnnouncementItems;
+        this.supplier = supplier;
     }
 
     protected AvailabilityAnnouncement(){}
@@ -39,6 +43,14 @@ public class AvailabilityAnnouncement implements Serializable{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public Set<AvailabilityAnnouncementItem> getAvailabilityAnnouncementItems() {
@@ -69,6 +81,7 @@ public class AvailabilityAnnouncement implements Serializable{
         return "AvailabilityAnnouncement{" +
                 "id=" + id +
                 ", date=" + date +
+                ", supplier=" + supplier +
                 ", availabilityAnnouncementItems=" + availabilityAnnouncementItems +
                 '}';
     }

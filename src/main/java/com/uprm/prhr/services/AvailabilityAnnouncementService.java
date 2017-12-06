@@ -6,6 +6,8 @@ import com.uprm.prhr.models.*;
 import com.uprm.prhr.repositories.AvailabilityAnnouncementRepository;
 import com.uprm.prhr.repositories.ResourceRepository;
 import com.uprm.prhr.repositories.ResourceRequestRepository;
+import com.uprm.prhr.repositories.SupplierRepository;
+import org.hibernate.dialect.identity.IdentityColumnSupportImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +21,27 @@ public class AvailabilityAnnouncementService {
 
     private AvailabilityAnnouncementRepository availabilityAnnouncementRepository;
     private ResourceRepository resourceRepository;
+    private SupplierRepository supplierRepository;
     private AvailabilityAnnouncementItemService availabilityAnnouncementItemService;
 
     @Autowired
-    public AvailabilityAnnouncementService(AvailabilityAnnouncementRepository availabilityAnnouncementRepository, ResourceRepository resourceRepository, AvailabilityAnnouncementItemService availabilityAnnouncementItemService) {
+    public AvailabilityAnnouncementService(AvailabilityAnnouncementRepository availabilityAnnouncementRepository, ResourceRepository resourceRepository, SupplierRepository supplierRepository, AvailabilityAnnouncementItemService availabilityAnnouncementItemService) {
         this.availabilityAnnouncementRepository = availabilityAnnouncementRepository;
         this.resourceRepository = resourceRepository;
+        this.supplierRepository = supplierRepository;
         this.availabilityAnnouncementItemService = availabilityAnnouncementItemService;
     }
 
-    //The resources hashtable key represents the resource id and the value represents the quantity of that resource
-    public AvailabilityAnnouncement createAvailabilityAnnouncement(Hashtable<Long, Long> resources){
 
-        //No resources found, can't have a ResourceRequest without a ResourceRequestDetail
+
+    //The resources hashtable key represents the resource id and the value represents the quantity of that resource
+    public AvailabilityAnnouncement createAvailabilityAnnouncement(Hashtable<Long, Long> resources, String supplierUsername){
+
+        Supplier supplier = supplierRepository.findByUser_Name(supplierUsername);
+        if(supplier == null)
+            throw new RuntimeException("User does not exist: " + supplierUsername);
+
+        //No resources found, can't have a ResourceRequest without a ResourceRequestItem
         if(resources.isEmpty())
             throw new MissingParameterException();
 
@@ -51,6 +61,6 @@ public class AvailabilityAnnouncementService {
             availabilityAnnouncementItems.add(rrd);
         }
 
-        return availabilityAnnouncementRepository.save(new AvailabilityAnnouncement(new Date(), availabilityAnnouncementItems));
+        return availabilityAnnouncementRepository.save(new AvailabilityAnnouncement(new Date(), availabilityAnnouncementItems, supplier));
     }
 }

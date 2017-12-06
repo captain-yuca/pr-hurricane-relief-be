@@ -1,11 +1,9 @@
 package com.uprm.prhr;
 
-import com.uprm.prhr.models.Category;
+import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.services.*;
-import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.Supplier;
-import com.uprm.prhr.services.AdminService;
 import com.uprm.prhr.services.CategoryService;
 import com.uprm.prhr.services.ResourceService;
 import com.uprm.prhr.services.UserService;
@@ -17,6 +15,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -27,7 +27,6 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	@Autowired
 	private ResourceService resourceService;
 	@Autowired
-
 	private ResourceRequestService resourceRequestService;
 	@Autowired
 	private AvailabilityAnnouncementService availabilityAnnouncementService;
@@ -37,9 +36,6 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	private StockService stockService;
 	@Autowired
     private UserService userService;
-
-	@Autowired
-	private AdminService adminService;
 	@Autowired
 	private SupplierService supplierService;
 	@Autowired
@@ -53,13 +49,10 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	}
 
 	public void runUser(){
-		userService.createUser("theherbertperez", "thistookforever","Mayaguez","Herbert", "Perez");
-		userService.createUser("K3RMoon","something","Mayaguez","Kelvin","Roche");
-		userService.createUser("Captain Yuca","didthisthingfirst","San Juan", "Manuel", "Baez");
-		userService.createUser("Medalla","Light","Ponce","Random","Person");
-
-		adminService.createAdmin("Medalla");
-		adminService.createAdmin("Captain Yuca");
+		userService.createUser("theherbertperez", "thistookforever","Mayaguez","Herbert", "Perez", true);
+		userService.createUser("K3RMoon","something","Mayaguez","Kelvin","Roche", true);
+		userService.createUser("Captain Yuca","didthisthingfirst","San Juan", "Manuel", "Baez", false);
+		userService.createUser("Medalla","Light","Ponce","Random","Person", false);
 
 		requesterService.createRequester("K3RMoon");
 		requesterService.createRequester("Captain Yuca");
@@ -83,12 +76,16 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceService.createResource("Manantial","Gallon Water");
 		resourceService.createResource("Taino","Bottled Water");
 
-		User usr1 = userService.createUser("Kelvin", "helloworld", "Mayaguez", "Herbert", "Perez");
-		User usr2 = userService.createUser("Manuel", "12345", "San Juan", "Herbert", "Perez");
+		User usr1 = userService.createUser("Kelvin", "helloworld", "Mayaguez", "Herbert", "Perez", false);
+		User usr2 = userService.createUser("Manuel", "12345", "San Juan", "Herbert", "Perez", true);
 		Supplier sup1 = supplierService.createSupplier("Kelvin");
 		Supplier sup2 = supplierService.createSupplier("Manuel");
 
-		this.createResourceRequests();
+		ArrayList<User> users = new ArrayList<>();
+		users.add(usr1);
+		users.add(usr2);
+		this.createResourceRequestsAndRequesters(users);
+		this.createAvailabilityAnnouncementsAndSuppliers(users);
 		this.createStocks(usr1, usr2, sup1, sup2);
 
 		this.runUser();
@@ -97,32 +94,35 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 
 	}
 
-	private void createResourceRequests(){
-		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+	private void createResourceRequestsAndRequesters(Collection<User> users){
+		for(User user: users){
+			Requester r = requesterService.createRequester(user.getName());
 
-		resourceQtyHT1.put(new Long(1), new Long(3));
-		resourceQtyHT1.put(new Long(2), new Long(20));
-		resourceRequestService.createResourceRequest(resourceQtyHT1);
 
-		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
+			Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
 
-		resourceQtyHT2.put(new Long(4), new Long(3));
-		resourceQtyHT2.put(new Long(5), new Long(20));
-		resourceRequestService.createResourceRequest(resourceQtyHT2);
+			resourceQtyHT1.put(new Long(1), new Long(3));
+			resourceQtyHT1.put(new Long(2), new Long(20));
+			resourceRequestService.createResourceRequest(resourceQtyHT1, user.getName());
+
+		}
+
+
+
 	}
 
-	private void createAvailabilityAnnouncements(){
-		Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+	private void createAvailabilityAnnouncementsAndSuppliers(Collection<User> users){
 
-		resourceQtyHT1.put(new Long(1), new Long(3));
-		resourceQtyHT1.put(new Long(2), new Long(20));
-		availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT1);
+		for(User user: users){
+//			Supplier s = supplierService.createSupplier(user.getName());
 
-		Hashtable<Long, Long> resourceQtyHT2 = new Hashtable<>();
+			Hashtable<Long, Long> resourceQtyHT1 = new Hashtable<>();
+			resourceQtyHT1.put(new Long(1), new Long(3));
+			resourceQtyHT1.put(new Long(2), new Long(20));
+			availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT1, user.getName());
+		}
 
-		resourceQtyHT2.put(new Long(4), new Long(3));
-		resourceQtyHT2.put(new Long(5), new Long(20));
-		availabilityAnnouncementService.createAvailabilityAnnouncement(resourceQtyHT2);
+
 	}
 
 	private void createStocks(User usr1, User usr2, Supplier sup1, Supplier sup2)

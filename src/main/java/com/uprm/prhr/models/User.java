@@ -17,6 +17,8 @@ public class User implements Serializable{
     @Column
     private String name;
 
+    @Column
+    private boolean isAdmin;
 
 
     @Column
@@ -36,12 +38,13 @@ public class User implements Serializable{
 
 
 
-    public User(String name, String password, Region region, String fName, String lName) {
+    public User(String name, String password, Region region, String fName, String lName, boolean isAdmin) {
         this.name = name;
         this.password = password;
         this.region = region;
         this.fName = fName;
         this.lName = lName;
+        this.isAdmin = isAdmin;
     }
 
     protected User(){}
@@ -92,6 +95,14 @@ public class User implements Serializable{
         this.lName = lName;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,11 +123,11 @@ public class User implements Serializable{
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", isAdmin=" + isAdmin +
                 ", password='" + password + '\'' +
-                ", region='" + region.toString() + '\'' +
+                ", region=" + region +
                 ", fName='" + fName + '\'' +
                 ", lName='" + lName + '\'' +
                 '}';
     }
-
 }

@@ -16,7 +16,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(String name, String password, String regionName, String fName, String lName){
+    public User createUser(String name, String password, String regionName, String fName, String lName, boolean isAdmin){
         if(userRepository.findByName(name)!=null){
             throw new UserNotFoundException(name);
         }
@@ -24,7 +24,7 @@ public class UserService {
         if(region==null){
             throw new RegionNotFoundException(regionName);
         }
-        return userRepository.save(new User(name, password, region, fName, lName));
+        return userRepository.save(new User(name, password, region, fName, lName, isAdmin));
     }
 
 
