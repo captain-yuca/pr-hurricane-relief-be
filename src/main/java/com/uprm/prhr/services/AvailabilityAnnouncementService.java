@@ -1,5 +1,7 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.MissingParameterException;
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
 import com.uprm.prhr.models.*;
 import com.uprm.prhr.repositories.AvailabilityAnnouncementRepository;
 import com.uprm.prhr.repositories.ResourceRepository;
@@ -41,7 +43,7 @@ public class AvailabilityAnnouncementService {
 
         //No resources found, can't have a ResourceRequest without a ResourceRequestItem
         if(resources.isEmpty())
-            throw new RuntimeException("No resources are given as a parameter.");
+            throw new MissingParameterException();
 
 //        ResourceRequest resourceRequest = resourceRequestRepository.save(new ResourceRequest(new Date(), new HashSet()));
 //        if(resourceRequest == null)
@@ -53,7 +55,7 @@ public class AvailabilityAnnouncementService {
         for(Long rid:resources.keySet()){
             Resource resource = this.resourceRepository.findOne(rid);
             if(resource == null)
-                throw new RuntimeException("Resource does not exist with given Id: " + rid);
+                throw new ResourceNotFoundException("" + rid);
             AvailabilityAnnouncementItem rrd = this.availabilityAnnouncementItemService.
                     createAvailabilityAnnouncementItem(rid, resources.get(rid));
             availabilityAnnouncementItems.add(rrd);

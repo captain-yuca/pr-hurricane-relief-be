@@ -4,7 +4,6 @@ import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.services.*;
 import com.uprm.prhr.models.Supplier;
-import com.uprm.prhr.services.AdminService;
 import com.uprm.prhr.services.CategoryService;
 import com.uprm.prhr.services.ResourceService;
 import com.uprm.prhr.services.UserService;
@@ -38,8 +37,6 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	@Autowired
     private UserService userService;
 	@Autowired
-	private AdminService adminService;
-	@Autowired
 	private SupplierService supplierService;
 	@Autowired
 	private RequesterService requesterService;
@@ -52,13 +49,10 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 	}
 
 	public void runUser(){
-		userService.createUser("theherbertperez", "thistookforever","Mayaguez","Herbert", "Perez");
-		userService.createUser("K3RMoon","something","Mayaguez","Kelvin","Roche");
-		userService.createUser("Captain Yuca","didthisthingfirst","San Juan", "Manuel", "Baez");
-		userService.createUser("Medalla","Light","Ponce","Random","Person");
-
-		adminService.createAdmin("Medalla");
-		adminService.createAdmin("Captain Yuca");
+		userService.createUser("theherbertperez", "thistookforever","Mayaguez","Herbert", "Perez", true);
+		userService.createUser("K3RMoon","something","Mayaguez","Kelvin","Roche", true);
+		userService.createUser("Captain Yuca","didthisthingfirst","San Juan", "Manuel", "Baez", false);
+		userService.createUser("Medalla","Light","Ponce","Random","Person", false);
 
 		requesterService.createRequester("K3RMoon");
 		requesterService.createRequester("Captain Yuca");
@@ -82,8 +76,8 @@ public class PrHurricaneReliefApplication implements CommandLineRunner{
 		resourceService.createResource("Manantial","Gallon Water");
 		resourceService.createResource("Taino","Bottled Water");
 
-		User usr1 = userService.createUser("Kelvin", "helloworld", "Mayaguez", "Herbert", "Perez");
-		User usr2 = userService.createUser("Manuel", "12345", "San Juan", "Herbert", "Perez");
+		User usr1 = userService.createUser("Kelvin", "helloworld", "Mayaguez", "Herbert", "Perez", false);
+		User usr2 = userService.createUser("Manuel", "12345", "San Juan", "Herbert", "Perez", true);
 		Supplier sup1 = supplierService.createSupplier("Kelvin");
 		Supplier sup2 = supplierService.createSupplier("Manuel");
 

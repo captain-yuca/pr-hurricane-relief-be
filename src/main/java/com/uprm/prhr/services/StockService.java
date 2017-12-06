@@ -1,5 +1,7 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
+import com.uprm.prhr.exceptions.SupplierNotFoundException;
 import com.uprm.prhr.models.*;
 import com.uprm.prhr.repositories.ResourceRepository;
 import com.uprm.prhr.repositories.StockRepository;
@@ -29,11 +31,11 @@ public class StockService
         Supplier supplier = this.supplierRepository.findOne(supplierID);
         if(resource == null)
         {
-            throw new RuntimeException("Resource does not exist: " + resourceName);
+            throw new ResourceNotFoundException(resourceName);
         }
         if(supplier == null)
         {
-            throw new RuntimeException("User ID does not exist: " + supplierID);
+            throw new SupplierNotFoundException("" + supplierID);
         }
         return stockRepository.save(new Stock(supplier, resource, qty, pricePerItem));
     }

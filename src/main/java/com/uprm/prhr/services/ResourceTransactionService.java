@@ -1,5 +1,8 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
+import com.uprm.prhr.exceptions.SupplierNotFoundException;
+import com.uprm.prhr.exceptions.UserNotFoundException;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceTransaction;
 import com.uprm.prhr.models.Supplier;
@@ -37,15 +40,15 @@ public class ResourceTransactionService
 
         if(resource == null)
         {
-            throw new RuntimeException("Resource Does Not Exist: " + resourceName);
+            throw new ResourceNotFoundException(resourceName);
         }
         if(user == null)
         {
-            throw new RuntimeException("User ID does not exist: " + uID);
+            throw new UserNotFoundException("" + uID);
         }
         if(supplier ==null)
         {
-            throw new RuntimeException("Supplier ID does not exist: " + sID);
+            throw new SupplierNotFoundException("" + sID);
         }
         return resourceTransactionRepository.save(new ResourceTransaction(user, supplier, date, resource, qty));
     }

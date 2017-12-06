@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.UserNotFoundException;
 import com.uprm.prhr.models.User;
 import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.repositories.UserRepository;
@@ -23,7 +24,7 @@ public class RequesterService{
     public Requester createRequester(String userName){
         User user = userRepository.findByName(userName);
         if(user == null) {
-            throw new RuntimeException("User does not exist: " + userName);
+            throw new UserNotFoundException(userName);
         }
         return requesterRepository.save(new Requester(user));
     }

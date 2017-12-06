@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.AvailabilityAnnouncement;
 import com.uprm.prhr.models.AvailabilityAnnouncementItem;
@@ -25,7 +26,7 @@ public class AvailabilityAnnouncementItemService {
     public AvailabilityAnnouncementItem createAvailabilityAnnouncementItem(Long resourceId, Long qty){
         Resource resource = this.resourceRepository.findOne(resourceId);
         if(resource == null)
-            throw new RuntimeException("Resource id not found: " + resourceId);
+            throw new ResourceNotFoundException("" + resourceId);
 
 //        AvailabilityAnnouncement AvailabilityAnnouncement = this.AvailabilityAnnouncementRepository.findOne(AvailabilityAnnouncementId);
 //        if(AvailabilityAnnouncement == null)

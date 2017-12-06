@@ -1,5 +1,8 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.models.ResourceRequestItem;
+import com.uprm.prhr.exceptions.MissingParameterException;
+import com.uprm.prhr.exceptions.ResourceNotFoundException;
 import com.uprm.prhr.models.Requester;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.models.ResourceRequest;
@@ -40,7 +43,7 @@ public class ResourceRequestService {
             throw new RuntimeException("Requester not found: " + requesterUsername);
         //No resources found, can't have a ResourceRequest without a ResourceRequestItem
         if(resources.isEmpty())
-            throw new RuntimeException("No resources are given as a parameter.");
+            throw new MissingParameterException();
 
 //        ResourceRequest resourceRequest = resourceRequestRepository.save(new ResourceRequest(new Date(), new HashSet()));
 //        if(resourceRequest == null)
@@ -52,7 +55,7 @@ public class ResourceRequestService {
         for(Long rid:resources.keySet()){
             Resource resource = this.resourceRepository.findOne(rid);
             if(resource == null)
-                throw new RuntimeException("Resource does not exist with given Id: " + rid);
+                throw new ResourceNotFoundException("" + rid);
             ResourceRequestItem rrd = this.resourceRequestItemService.
                     createResourceRequestItem(rid, resources.get(rid));
             resourceRequestItems.add(rrd);

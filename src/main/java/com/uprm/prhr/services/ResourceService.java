@@ -1,5 +1,6 @@
 package com.uprm.prhr.services;
 
+import com.uprm.prhr.exceptions.CategoryNotFoundException;
 import com.uprm.prhr.models.Category;
 import com.uprm.prhr.models.Resource;
 import com.uprm.prhr.repositories.CategoryRepository;
@@ -23,7 +24,7 @@ public class ResourceService{
     public Resource createResource(String name, String categoryName){
         Category category = this.categoryRepository.findByName(categoryName);
         if(category == null) {
-            throw new RuntimeException("Category does not exist: " + categoryName);
+            throw new CategoryNotFoundException(categoryName);
         }
         return resourceRepository.save(new Resource(name, category));
     }
